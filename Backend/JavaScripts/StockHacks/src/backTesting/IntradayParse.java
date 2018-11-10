@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.json.JSONObject;
-import org.openqa.selenium.Keys;
 
 public class IntradayParse {
 
@@ -40,7 +39,7 @@ public class IntradayParse {
 		dateKeys = times;
 		for(int i = 0; i<dateKeys.size();i++)
 		{
-			System.out.println(dateKeys.get(i));
+			//System.out.println(dateKeys.get(i));
 		}
 	}
 
