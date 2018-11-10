@@ -9,14 +9,13 @@ public class Automated {
 
 	public static void main(String[] args) {
 
+		System.setProperty("webdriver.chrome.driver","lib/chromedriver.exe");
 		WebDriver browser = new ChromeDriver();
-
-	    //Firefox's proxy driver executable is in a folder already
-	    //  on the host system's PATH environment variable.
+		
 	    browser.get("https://www.google.com");
 	    WebElement header = browser.findElement(By.id("gsr"));
 	    System.out.println(header.toString());
-
+	    
 	    browser.close();        
 
 	}
