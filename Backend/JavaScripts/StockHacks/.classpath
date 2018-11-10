@@ -7,5 +7,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/ppand/Desktop/SunHacks/SunhacksFall2018/Backend/JavaScripts/StockHacks/lib/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ppand/Desktop/SunHacks/SunhacksFall2018/Backend/JavaScripts/StockHacks/lib/client-combined-3.141.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ppand/Desktop/SunHacks/SunhacksFall2018/Backend/JavaScripts/StockHacks/lib/selenium-server-standalone-3.141.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
