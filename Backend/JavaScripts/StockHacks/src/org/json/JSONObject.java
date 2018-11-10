@@ -161,7 +161,7 @@ public class JSONObject {
     /**
      * The map where the JSONObject's properties are kept.
      */
-    private final Map<String, Object> map;
+    public final Map<String, Object> map;
 
     /**
      * It is sometimes more convenient and less ambiguous to have a
