@@ -136,7 +136,7 @@ public class Basic {
 		return true;
 	}
 	
-	public void waitUnilValid() 
+	public void waitUntilValid() 
 	{
 		Calendar c = Calendar.getInstance();
 		Date d = new Date();
