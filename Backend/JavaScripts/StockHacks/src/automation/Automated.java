@@ -48,9 +48,10 @@ public class Automated {
 			usernameField.sendKeys(username);
 			passwordField.sendKeys(password);
 			submitButton.submit();
+			
+			// Find Stock and return price
 		    driver.get("https://www.marketwatch.com/investing/stock/" + stock);
 		    WebElement price = driver.findElement(By.xpath("/html/body/div[2]/div[2]/div[2]/div/div/div[2]/h3/bg-quote"));
-		
 		    System.out.println(price.getText());
 		}
 		else if(website.equals("E*Trade"))
@@ -108,10 +109,8 @@ public class Automated {
 			System.out.println("Units of " + stockName.getText() + " Stock: " + quantity);
 			System.out.println("Estimated Commmission: " + estimatedCommission.getText());
 			System.out.println("Estimated Total: " + estimatedTotalCost.getText());
-			
-			Thread.sleep(10000);
 		}
-		
+		Thread.sleep(10000);
 	    driver.quit();
 	    input.close();
 	}
