@@ -8,6 +8,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Select;
 
 public class Automated {
@@ -18,7 +19,9 @@ public class Automated {
 		
 		// Chrome Driver details
 		System.setProperty("webdriver.chrome.driver","lib/chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--headless");						// Comment out to show browser
+		WebDriver driver = new ChromeDriver(options);
 		int pageLoadTimeout = 20;
 		driver.manage().timeouts().implicitlyWait(pageLoadTimeout, TimeUnit.SECONDS);
 		
