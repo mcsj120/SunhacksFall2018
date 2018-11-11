@@ -65,7 +65,7 @@ public class ApiCall
 		{
 			url = new URL(intro + "function="+function+"&symbol="+symbol+"&interval="+interval + 
 						"&time_period=" +timePeriod + "&series_type=" + seriesType + "&apikey=" + apiKey);
-			System.out.println(url.toString());
+			//System.out.println(url.toString());
 			answer = getObject(url);
 		} 
 		catch (MalformedURLException e) 
@@ -76,7 +76,23 @@ public class ApiCall
 		return answer;
 	}
 	
+	public static JSONObject daily(String function, String symbol, String outputsize, String apiKey )
+	{
 
+		URL url = null;
+		try 
+		{
+			url = new URL(intro + "function="+function+"&symbol="+symbol+ 
+						"&outputsize=" +outputsize + "&apikey=" + apiKey);
+		} 
+		catch (MalformedURLException e) 
+		{
+			e.printStackTrace();
+		}
+		JSONObject answer = getObject(url);
+		return answer;
+	}
+	
 	public static JSONObject getObject(URL url)
 	{
 		JSONObject obj = null;

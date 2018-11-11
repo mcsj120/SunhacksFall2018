@@ -37,10 +37,10 @@ public class IntradayParse {
 		ArrayList<String> times = new ArrayList<String>(Arrays.asList(JSONObject.getNames(fiveminkeys)));
 		Collections.sort(times);
 		dateKeys = times;
-		for(int i = 0; i<dateKeys.size();i++)
+		/*for(int i = 0; i<dateKeys.size();i++)
 		{
-			//System.out.println(dateKeys.get(i));
-		}
+			System.out.println(dateKeys.get(i));
+		}*/
 	}
 
 }
