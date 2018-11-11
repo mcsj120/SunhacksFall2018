@@ -36,8 +36,10 @@ public class TestCode {
 			throw new Exception();
 		}
 		return gain;
-		//ArrayList<Double> gain = data50.startTrendFollowing(data200, symbolSma, "full", apiKey, 2750);
 	}
+	
+	
+		//ArrayList<Double> gain = data50.startTrendFollowing(data200, symbolSma, "full", apiKey, 2750);
 		
 		/*JSONObject dailyTest = ApiCall.daily("TIME_SERIES_DAILY", symbolIntra, outputsizeIntra, apiKey);
 		DailyParse testing = new DailyParse(dailyTest);

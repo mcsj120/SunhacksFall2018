@@ -1,7 +1,11 @@
 package backTesting;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import org.json.JSONObject;
+
 import automation.Automated;
 
 public class Basic {
@@ -42,6 +46,12 @@ public class Basic {
 					try
 					{
 						retVal = automation.Automated.automatedETrade(stock, shares, "buy");
+						try {
+							String curString = automation.Automated.automatedMarketWatch(stock);
+							System.out.println(curString);
+							initValue = Integer.parseInt(curString);
+						}
+						catch(Exception e){}
 						ran = true;
 						purchased = true;
 					}
@@ -80,6 +90,7 @@ public class Basic {
 					currentPrice = Integer.parseInt(curString);
 					if(currentPrice < initValue * (1-stopLoss))
 					{
+						System.out.println(currentPrice);
 						while(true)
 						{
 							try
@@ -143,5 +154,26 @@ public class Basic {
 		c.setTime(d);
 		int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
 		int time = 0;
+	}
+	
+	public void runBackTest()
+	{
+		String functionSma = "SMA";
+		String intervalSma = "daily";
+		String series_typeSma = "close";
+		String timeSma50 = "50";
+		String timeSma200 = "200";
+		
+		JSONObject sma501 = null;
+		sma501 = ApiCall.sma(functionSma, stock, intervalSma, timeSma50, series_typeSma, Algo1.apiKey);
+		SmaParse data50 = new SmaParse(sma501);
+		
+		JSONObject sma2001 = null;
+		sma2001 = ApiCall.sma(functionSma, stock, intervalSma, timeSma200, series_typeSma, Algo1.apiKey);
+		SmaParse data200 = new SmaParse(sma2001);
+		
+		ArrayList<Double> gain = data50.startTrendFollowing(data200, stock, "full", Algo1.apiKey, 2750);
+		
+		System.out.println(gain.get(0) - gain.get(1));
 	}
 }
