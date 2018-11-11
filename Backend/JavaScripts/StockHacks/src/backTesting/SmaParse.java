@@ -1,8 +1,10 @@
 package backTesting;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -161,6 +163,29 @@ public class SmaParse {
 				values.add(last);	
 			}
 			return values;
+		}
+		
+		public int todaySMA(SmaParse other, String symbol) throws Exception
+		{
+			/*JSONObject data = ApiCall.daily("TIME_SERIES_DAILY", symbol, "full", "HA1B7557DRPRIY78");
+			DailyParse first;
+			do {
+				first = new DailyParse(data);
+				if(first.dates == null)
+				{
+					try {System.out.println("overload");Thread.sleep(120000);} catch (InterruptedException e) {e.printStackTrace();}
+				}
+			}while(first.init ==false);*/
+			
+			String date = dateKeys.get(dateKeys.size()-1);
+			Date d = new Date();
+			SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd");
+			String s = form.format(d);
+			if(s.equals(date))
+			{
+				return compareTo(other, date);
+			}
+			throw new Exception();
 		}
 		
 
