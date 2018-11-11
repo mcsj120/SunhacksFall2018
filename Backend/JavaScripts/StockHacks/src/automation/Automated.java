@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.Select;
 
 public class Automated {
 
-	public static void main(String[] args) throws InterruptedException {
+	public static String automated(String stock, String quantity, String type) throws InterruptedException {
 
 		String website = "E*Trade";
 		
@@ -30,7 +30,7 @@ public class Automated {
 		Scanner input = new Scanner(System.in);
 		String username;
 		String password;
-		
+		String retVal = null;
 		if(website.equals("MarketWatch"))
 		{
 			// Login details
@@ -39,7 +39,7 @@ public class Automated {
 			
 			// Stock to find
 			System.out.println("Insert Stock Symbol: ");
-			String stock = input.nextLine();
+			//String stock = input.nextLine();
 			
 			// Open MarketWatch and login
 			driver.get("https://www.marketwatch.com/");
@@ -55,7 +55,7 @@ public class Automated {
 			// Find Stock and return price
 		    driver.get("https://www.marketwatch.com/investing/stock/" + stock);
 		    WebElement price = driver.findElement(By.xpath("/html/body/div[2]/div[2]/div[2]/div/div/div[2]/h3/bg-quote"));
-		    System.out.println(price.getText());
+		    retVal = price.getText();
 		}
 		else if(website.equals("E*Trade"))
 		{
@@ -64,10 +64,10 @@ public class Automated {
 			password = "PPanda2BePopping";
 			
 			// Stock to find
-			System.out.println("Insert Stock Symbol: ");
-			String stock = input.nextLine();
-			System.out.println("Insert Quantity: ");
-			String quantity = input.nextLine();
+			//System.out.println("Insert Stock Symbol: ");
+			//String stock = input.nextLine();
+			//System.out.println("Insert Quantity: ");
+			//String quantity = input.nextLine();
 			
 			// Open E*Trade and login
 			driver.get("https://www.etrade.com");
@@ -108,14 +108,16 @@ public class Automated {
 			WebElement pricePerStock = driver.findElement(By.xpath("//*[@id=\"snapshotView\"]/div[1]/div[1]/table/tbody/tr[2]/td"));
 			WebElement estimatedCommission = driver.findElement(By.xpath("//*[@id=\"etContent\"]/div/div[1]/div/div/div[3]/section/div[1]/div/div/div/article/div/form/div[5]/div/div[2]/span[1]/span[2]"));
 			WebElement estimatedTotalCost = driver.findElement(By.xpath("//*[@id=\"etContent\"]/div/div[1]/div/div/div[3]/section/div[1]/div/div/div/article/div/form/div[5]/div/div[2]/span[2]/span[2]"));
-			System.out.println("Price per Stock of " + stockName.getText() + ": $" + pricePerStock.getText());
-			System.out.println("Units of " + stockName.getText() + " Stock: " + quantity);
-			System.out.println("Estimated Commmission: " + estimatedCommission.getText());
-			System.out.println("Estimated Total: " + estimatedTotalCost.getText());
+			
+			retVal = ("Price per Stock of " + stockName.getText() + ": $" + pricePerStock.getText())+'\n'+
+			("Units of " + stockName.getText() + " Stock: " + quantity)+'\n'+
+			("Estimated Commmission: " + estimatedCommission.getText())+'\n'+
+			("Estimated Total: " + estimatedTotalCost.getText());
 		}
 		Thread.sleep(10000);
 	    driver.quit();
 	    input.close();
+	    return retVal;
 	}
 
 }
