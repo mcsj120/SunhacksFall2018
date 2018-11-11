@@ -145,6 +145,7 @@ public class SmaParse {
 					{
 						double closing = first.getCloseValue(dateKeys.get(i));
 						values.add(0, closing);
+						System.out.println(date);
 					}
 				}
 				else if(values.size() == 1)
@@ -152,7 +153,8 @@ public class SmaParse {
 					if(x == -1)
 					{
 						double closing2 = first.getCloseValue(dateKeys.get(i));
-						values.add(0, closing2);
+						values.add(1, closing2);
+						System.out.println(date);
 						solved = true;
 					}
 				}

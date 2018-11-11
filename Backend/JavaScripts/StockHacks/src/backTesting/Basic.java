@@ -1,8 +1,6 @@
 package backTesting;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 import org.json.JSONObject;
 
@@ -14,7 +12,8 @@ public class Basic {
 	public boolean purchased;
 	public String retVal;
 	public double stopLoss;
-	public int initValue;
+	public double initValue;
+	public double finalValue;
 	public Basic(String stock, String shares, double stopLoss)
 	{
 		this.stock = stock;
@@ -69,7 +68,14 @@ public class Basic {
 					try
 					{
 						retVal = automation.Automated.automatedETrade(stock, shares, "sell");
+						try {
+							String curString = automation.Automated.automatedMarketWatch(stock);
+							System.out.println(curString);
+							finalValue = Integer.parseInt(curString);
+						}
+						catch(Exception e){}
 						ran = true;
+						System.out.println(finalValue-initValue);
 						return;
 					}
 					catch(Exception e)
@@ -173,7 +179,7 @@ public class Basic {
 		SmaParse data200 = new SmaParse(sma2001);
 		
 		ArrayList<Double> gain = data50.startTrendFollowing(data200, stock, "full", Algo1.apiKey, 2750);
-		
-		System.out.println(gain.get(0) - gain.get(1));
+		System.out.println("Start:" + gain.get(0) + '\n' + "Final:" + gain.get(1));
+		System.out.println(gain.get(1) - gain.get(0));
 	}
 }

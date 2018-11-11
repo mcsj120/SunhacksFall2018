@@ -110,10 +110,7 @@ public class ApiCall
 			con.disconnect();
 			obj=new JSONObject(content);
 		}
-		catch(Exception e)
-		{
-			
-		}
+		catch(Exception e){}
 		return obj;
 	}
 }
