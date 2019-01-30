@@ -75,7 +75,7 @@ public class SmaParse {
 			String smaObjOther = other.dates.get(date).toString();
 			double valueOther = Double.parseDouble(smaObjOther.substring(8, smaObjOther.length()-2));
 			
-			if(value > valueOther)
+			if(value < valueOther)
 			{
 				return 1;
 			}
@@ -95,9 +95,9 @@ public class SmaParse {
 			boolean solved = false;
 			JSONObject data = ApiCall.daily("TIME_SERIES_DAILY", symbol, outputsize, apiKey);
 			DailyParse first = new DailyParse(data);
-
-			for(int i = 2625; i < dateKeys.size()-1 && i < other.dateKeys.size()-1 && solved == false; i++)
+			for(int i = 0; i < dateKeys.size()-1 && i < other.dateKeys.size()-1 && solved == false; i++)
 			{
+				
 				String date = dateKeys.get(i);
 				int x = compareTo(other, date);
 				if(values.size() == 0)
@@ -106,7 +106,7 @@ public class SmaParse {
 					{
 						double closing = first.getCloseValue(dateKeys.get(i));
 						values.add(0, closing);
-						System.out.println(closing);
+						System.out.println(dateKeys.get(i));
 					}
 				}
 				else if(values.size() == 1)
@@ -117,7 +117,7 @@ public class SmaParse {
 						
 						values.add(0, closing2);
 						solved = true;
-						System.out.println(closing2);
+						System.out.println(dateKeys.get(i));
 					}
 				}
 			}
@@ -190,5 +190,61 @@ public class SmaParse {
 			throw new Exception();
 		}
 		
+		public double startCompleteTrendFollowing(SmaParse other, String symbol, String outputsize, String apiKey, int offset, int startMoney)
+		{
+			//System.out.println(dateKeys.get(offset));
+			ArrayList<Double> values = new ArrayList<Double>();
+			//double total = 0;
+			JSONObject data = ApiCall.daily("TIME_SERIES_DAILY", symbol, outputsize, apiKey);
+			DailyParse first = new DailyParse(data);
+			//double startMoney = 100;
+			int stocksOwned = 0;
+			int i;
+			for(i = offset; i < dateKeys.size()-1 && i < other.dateKeys.size()-1; i++)
+			{
+				
+				String date = dateKeys.get(i);
+				int x = compareTo(other, date);
+				if(values.size() == 0)
+				{
+					if(x == 1)
+					{
+						double closing = first.getCloseValue(dateKeys.get(i));
+						boolean fin = false;
+						while(!fin)
+						{
+							if(startMoney - closing > 0)
+							{
+								stocksOwned += 1;
+								startMoney -= closing;
+							}
+							else
+							{
+								fin = true;
+							}
+						}
+						values.add(0, closing);
+					}
+				}
+				else if(values.size() == 1)
+				{
+					if(x == -1)
+					{
+						double closing2 = first.getCloseValue(dateKeys.get(i));
+						startMoney += (closing2 * stocksOwned);
+						stocksOwned = 0;
+						values.add(0, closing2);
+						//total += (values.get(0) - values.get(1));
+						values.clear();
+					}
+				}
+			}
+			if(stocksOwned > 0)
+			{
+				startMoney += (first.getCloseValue(dateKeys.get(i)) * stocksOwned);
+			}
+			//System.out.println(dateKeys.get(i));
+			return startMoney;
+		}
 
 }

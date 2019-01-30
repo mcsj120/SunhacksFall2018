@@ -57,7 +57,8 @@ public class DailyParse
 		int x = parsing.indexOf("close\":\"");
 		String firstParse = parsing.substring(x+8);
 		x = parsing.indexOf(".");
-		String secondParse = firstParse.substring(0, x + 4);
+		int y = firstParse.indexOf("}");
+		String secondParse = firstParse.substring(0, y - 1);
 		double value = Double.parseDouble(secondParse);
 		return value;
 	}

@@ -26,97 +26,97 @@ public class Basic {
 	{
 		while(true)
 		{
-		waitUntilValid();
-		Date d = new Date();
-		int change = 0;
-		try {
-			change = TestCode.compareSMATodayOpen(stock, d);
-		} catch (Exception e) {
-			//dates dont match
-		}
-		boolean ran = false;
-		
-		while(!ran)
-		{
-			if(purchased == false)
-			{
-				if(change == 1)
-				{
-					try
-					{
-						retVal = automation.Automated.automatedETrade(stock, shares, "buy");
-						try {
-							String curString = automation.Automated.automatedMarketWatch(stock);
-							System.out.println(curString);
-							initValue = Integer.parseInt(curString);
-						}
-						catch(Exception e){}
-						ran = true;
-						purchased = true;
-					}
-					catch(Exception e)
-					{
-						ran = false;
-						try {Thread.sleep(600000);} catch (InterruptedException e1) {e1.printStackTrace();}
-					}
-				}
-			}
-			else if(purchased == true)
-			{
-				if(change == -1)
-				{
-					try
-					{
-						retVal = automation.Automated.automatedETrade(stock, shares, "sell");
-						try {
-							String curString = automation.Automated.automatedMarketWatch(stock);
-							System.out.println(curString);
-							finalValue = Integer.parseInt(curString);
-						}
-						catch(Exception e){}
-						ran = true;
-						System.out.println(finalValue-initValue);
-						return;
-					}
-					catch(Exception e)
-					{
-						ran = false;
-						try {Thread.sleep(600000);} catch (InterruptedException e1) {e1.printStackTrace();}
-					}
-				}
-			}
-		}
-		boolean stockMarketOpen = true;
-		while(stockMarketOpen)
-		{
-			int currentPrice;
+			waitUntilValid();
+			Date d = new Date();
+			int change = 0;
 			try {
-				String curString = automation.Automated.automatedMarketWatch(stock);
-				try {
-					currentPrice = Integer.parseInt(curString);
-					if(currentPrice < initValue * (1-stopLoss))
+				change = TestCode.compareSMATodayOpen(stock, d);
+			} catch (Exception e) {
+				//dates dont match
+			}
+			boolean ran = false;
+			
+			while(!ran)
+			{
+				if(purchased == false)
+				{
+					if(change == 1)
 					{
-						System.out.println(currentPrice);
-						while(true)
+						try
 						{
-							try
-							{
-								retVal = automation.Automated.automatedETrade(stock, shares, "sell");
-								ran = true;
-								return;
+							retVal = automation.Automated.automatedETrade(stock, shares, "buy");
+							try {
+								String curString = automation.Automated.automatedMarketWatch(stock);
+								System.out.println(curString);
+								initValue = Integer.parseInt(curString);
 							}
-							catch(Exception e)
-							{
-								ran = false;
-								try {Thread.sleep(600000);} catch (InterruptedException e1) {e1.printStackTrace();}
-							}
+							catch(Exception e){}
+							ran = true;
+							purchased = true;
+						}
+						catch(Exception e)
+						{
+							ran = false;
+							try {Thread.sleep(600000);} catch (InterruptedException e1) {e1.printStackTrace();}
 						}
 					}
 				}
-				catch(Exception e) {}
-			} catch (InterruptedException e) {}
-			stockMarketOpen = validTime();
-		}
+				else if(purchased == true)
+				{
+					if(change == -1)
+					{
+						try
+						{
+							retVal = automation.Automated.automatedETrade(stock, shares, "sell");
+							try {
+								String curString = automation.Automated.automatedMarketWatch(stock);
+								System.out.println(curString);
+								finalValue = Integer.parseInt(curString);
+							}
+							catch(Exception e){}
+							ran = true;
+							System.out.println(finalValue-initValue);
+							return;
+						}
+						catch(Exception e)
+						{
+							ran = false;
+							try {Thread.sleep(600000);} catch (InterruptedException e1) {e1.printStackTrace();}
+						}
+					}
+				}
+			}
+			boolean stockMarketOpen = true;
+			while(stockMarketOpen)
+			{
+				int currentPrice;
+				try {
+					String curString = automation.Automated.automatedMarketWatch(stock);
+					try {
+						currentPrice = Integer.parseInt(curString);
+						if(currentPrice < initValue * (1-stopLoss))
+						{
+							System.out.println(currentPrice);
+							while(true)
+							{
+								try
+								{
+									retVal = automation.Automated.automatedETrade(stock, shares, "sell");
+									ran = true;
+									return;
+								}
+								catch(Exception e)
+								{
+									ran = false;
+									try {Thread.sleep(600000);} catch (InterruptedException e1) {e1.printStackTrace();}
+								}
+							}
+						}
+					}
+					catch(Exception e) {}
+				} catch (InterruptedException e) {}
+				stockMarketOpen = validTime();
+			}
 		
 		}
 	}	
@@ -177,9 +177,13 @@ public class Basic {
 		JSONObject sma2001 = null;
 		sma2001 = ApiCall.sma(functionSma, stock, intervalSma, timeSma200, series_typeSma, Algo1.apiKey);
 		SmaParse data200 = new SmaParse(sma2001);
-		
-		ArrayList<Double> gain = data50.startTrendFollowing(data200, stock, "full", Algo1.apiKey, 2750);
+		/*
+		ArrayList<Double> gain = data200.startTrendFollowing(data50, stock, "full", Algo1.apiKey, 2000);
 		System.out.println("Start:" + gain.get(0) + '\n' + "Final:" + gain.get(1));
 		System.out.println(gain.get(1) - gain.get(0));
+		*/
+		double gain = data200.startCompleteTrendFollowing(data50, stock, "full", Algo1.apiKey, 0, 1000);
+		System.out.println(gain - 1000);
+		//System.out.println((gain-1000)/(20*1000));
 	}
 }

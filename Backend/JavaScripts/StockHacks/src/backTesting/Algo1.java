@@ -15,12 +15,25 @@ public class Algo1 {
 		/*
 		 * Get input from webpage
 		 */
-		Basic run = new Basic("MSFT", "1", 0.05);
+		String[] arg = {"V","MSFT","CRON","ATVI","NOC","AMZN","NVDA"};
+
+		for(int i = 0 ; i < arg.length; i++)
+		{
+			Basic run = new Basic(arg[i], "1", 0.05);
+			run.runBackTest();
+			try {
+				Thread.sleep(60000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 		//run.runAlgorithmPresent();
-		run.runBackTest();
-		
-		
-		
+		/*try {
+			automation.Automated.automatedETrade("MSFT","1", "buy");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
 		
 	}
 
